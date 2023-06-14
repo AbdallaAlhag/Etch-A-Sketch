@@ -10,20 +10,21 @@ document.addEventListener("DOMContentLoaded", () => {
     let output = document.getElementById("size");
     output.textContent = slider.value + "x" + slider.value;
     
-
     slider.oninput = function() {
         output.textContent = this.value + "x" + this.value;
         //createCanvas();
         let newWidth = slider.value;
-        //recreateCanvas();
+        clearCanvas();
+        createCanvas(newWidth);
     }
 
-    
-
-    function createCanvas() {
+    function createCanvas(width) {
         for (let i = 0; i < width*width; i++) {
             const square = document.createElement('div');
             square.setAttribute('id', i);
+            let recalutedNum = (672-(2*width)) / width;
+            square.style.height = recalutedNum + 'px';
+            square.style.width = recalutedNum + 'px';
             grid.appendChild(square);
 
             // hover over
@@ -34,12 +35,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-   
-    createCanvas();
+    function clearCanvas() {
+        while(grid.firstChild) {
+            grid.removeChild(grid.firstChild);
+        }
+    }
+
+    createCanvas(width);
     
     function hoverOver(block) {
         block.addEventListener('mouseover', function(e){
-            square.style.backgroundColor = "black";
+            block.style.backgroundColor = "black";
         });
     }
 
@@ -51,5 +57,5 @@ document.addEventListener("DOMContentLoaded", () => {
         
     }
 
-})
+});
 
